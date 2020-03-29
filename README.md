@@ -2,6 +2,13 @@
 
 This is the console /command interpreter for the Holberton Airbnb clone project. The console can be used to store objects in and retrieve objects from a JSON.
 
+### Requirements:
+* Ubuntu 14.04 LTS
+* python3 (version 3.4.3)
+* MySQL 5.7 (version 5.7.8-rc)
+* MySQLdb module version 1.3.x
+* SQLAlchemy version 1.2.x
+
 ### Supported classes:
 * BaseModel
 * User
@@ -19,6 +26,7 @@ This is the console /command interpreter for the Holberton Airbnb clone project.
 * quit/EOF - quit the console
 * help - see descriptions of commands
 
+### Usage:
 To start, navigate to the project folder and enter `./console.py` in the shell.
 
 #### Create
@@ -49,6 +57,7 @@ Ex:
 Ex:
 `help` or `help quit`
 
+#### Aditional:
 Additionally, the console supports `<class name>.<command>(<parameters>)` syntax.
 Ex:
 `City.show(my_city_id)`
