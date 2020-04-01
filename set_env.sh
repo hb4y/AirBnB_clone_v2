@@ -29,13 +29,13 @@ set_env () {
     return 1
   fi
 
-  if [[ $1 =~ ^TEST|test$ ]]
+  if [[ $1 =~ ^TEST$|^test$ ]]
   then
     export HBNB_ENV="test"
     export HBNB_MYSQL_DB="hbnb_test_db"
     export HBNB_MYSQL_USER="hbnb_test"
     export HBNB_MYSQL_PWD="hbnb_test_pwd"
-  elif [[ $1 =~ ^DEV|dev$ ]]
+  elif [[ $1 =~ ^DEV$|^dev$ ]]
   then
     export HBNB_ENV="dev"
     export HBNB_MYSQL_DB="hbnb_dev_db"
@@ -50,10 +50,10 @@ set_env () {
     return 1
   fi
 
-  if [[ $2 =~ ^FILE|file$ ]]
+  if [[ $2 =~ ^FILE$|^file$ ]]
   then
     export HBNB_TYPE_STORAGE="file"
-  elif [[ $2 =~ ^DB|db$ ]]
+  elif [[ $2 =~ ^DB$|^db$ ]]
   then
     export HBNB_TYPE_STORAGE="db"
   else
