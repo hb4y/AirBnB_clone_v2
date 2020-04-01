@@ -20,7 +20,7 @@
 if [ $# -lt 2 ]
 then
   echo "--" >&2
-  echo "$0: Error: Invalid number of arguments.\n" >&2
+  print "%s: Error: Invalid number of arguments.\n", "$0" >&2
   echo "Usage: source ./set_env.sh [test|dev] [fs|dbs]" >&2
   echo "       or" >&2
   echo "       . ./set_env.sh [test|dev] [fs|dbs]" >&2
@@ -41,7 +41,7 @@ then
   export HBNB_MYSQL_PWD="hbnb_dev_pwd"
 else
   echo "--" >&2
-  echo "$0: Error: ($1) is an invalid argument.\n" >&2
+  printf "%s: Error: (%s) is an invalid argument.\n\n", "$0", "$1" >&2
   echo "Usage: source ./set_env.sh [test|dev] [fs|dbs]" >&2
   echo "       or" >&2
   echo "       . ./set_env.sh [test|dev] [fs|dbs]" >&2
@@ -57,8 +57,11 @@ then
   echo "db - $2"
   export HBNB_TYPE_STORAGE="db"
 else
-  echo "$0: Error: ($2) is an invalid argument." >&2
-  echo "Usage: source ./set_env.sh [test|dev] [file|db]" >&2
+  echo "--" >&2
+  printf "%s: Error: (%s) is an invalid argument.\n\n", "$0", "$2" >&2
+  echo "Usage: source ./set_env.sh [test|dev] [fs|dbs]" >&2
+  echo "       or" >&2
+  echo "       . ./set_env.sh [test|dev] [fs|dbs]" >&2
   exit 1
 fi
 
