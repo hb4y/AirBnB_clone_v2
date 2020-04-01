@@ -4,6 +4,7 @@ import MySQLdb
 from models.state import Place
 from models.engine.db_storage import DBStorage
 
+
 class TestDBStorage(unittest.TestCase):
     """
         Test cases for DB for AirBnB replica
