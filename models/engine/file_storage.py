@@ -25,6 +25,12 @@ class FileStorage:
         Return:
             returns a dictionary of __object
         """
+        if cls:
+            tmp_dic = {}
+            for key, value in self.__objects.items():
+                if key.rsplit('.')[0] == cls.__name__:
+                    tmp_dic[key] = value
+            return tmp_dic
         return self.__objects
 
     def new(self, obj):
