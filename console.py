@@ -43,6 +43,15 @@ class HBNBCommand(cmd.Cmd):
                 raise SyntaxError()
             my_list = line.split(" ")
             obj = eval("{}()".format(my_list[0]))
+            attr = my_list[1].rsplit('=')[0]
+            val = my_list[1].rsplit('=')[1]
+            if val.isdigit():
+                setattr(obj, attr, val)
+            elif val[0] == '"':
+                val = val[1:-1].replace('"', '\\"').replace('_', ' ')
+                setattr(obj, attr, val)
+            else:
+                setattr(obj, attr, val)
             obj.save()
             print("{}".format(obj.id))
         except SyntaxError:
