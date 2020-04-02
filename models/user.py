@@ -2,9 +2,9 @@
 """This is the user class"""
 from models.base_model import Base
 from models.base_model import BaseModel
+from models.place import Place
 from sqlalchemy import Column
 from sqlalchemy import String
-from models.place import Place
 from sqlalchemy.orm import relationship
 
 
