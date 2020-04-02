@@ -20,6 +20,8 @@ from sqlalchemy.orm.session import Session
 from sqlalchemy.engine.base import Engine
 
 
+@unittest.skipIf(getenv("HBNB_TYPE_STORAGE") != 'db',
+                 "Don´t run if is file storage")
 class TestDBStorage(unittest.TestCase):
     """
         Test cases for DB for AirBnB replica
