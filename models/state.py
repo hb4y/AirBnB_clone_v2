@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """This is the state class"""
-from os
+import os
 from models.city import City
 from sqlalchemy import Column
 from sqlalchemy import String
