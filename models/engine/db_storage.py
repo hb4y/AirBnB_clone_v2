@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This is the database storage class for AirBnB"""
 from os import getenv
+from models.base_model import Base
 from models.base_model import BaseModel
 from models.city import City
 from models.state import State

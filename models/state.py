@@ -1,5 +1,11 @@
 #!/usr/bin/python3
 """This is the state class"""
+from os import getenv
+from models.city import City
+from sqlalchemy import Column
+from sqlalchemy import String
+from sqlalchemy.orm import relationship
+from models.base_model import Base
 from models.base_model import BaseModel
 
 
