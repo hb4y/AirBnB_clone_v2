@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """This is the database storage class for AirBnB"""
-from os import getenv
+import os
 from models.base_model import Base
 from models.base_model import BaseModel
 from models.city import City
@@ -28,12 +28,12 @@ class DBStorage:
     def __init__(self):
         """Constructor method for DBStorage class."""
         self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".
-                                      format(getenv("HBNB_MYSQL_USER"),
-                                             getenv("HBNB_MYSQL_PWD"),
-                                             getenv("HBNB_MYSQL_HOST"),
-                                             getenv("HBNB_MYSQL_DB")),
+                                      format(os.getenv("HBNB_MYSQL_USER"),
+                                             os.getenv("HBNB_MYSQL_PWD"),
+                                             os.getenv("HBNB_MYSQL_HOST"),
+                                             os.getenv("HBNB_MYSQL_DB")),
                                       pool_pre_ping=True)
-        if getenv("HBNB_ENV") == "test":
+        if os.getenv("HBNB_ENV") == "test":
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
