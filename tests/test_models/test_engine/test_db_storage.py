@@ -46,14 +46,14 @@ class TestDBStorage(unittest.TestCase):
         self.cursor.close()
         self.db.close()
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', 'Wrong DB')
+    @unittest.skipIf(getenv('HBNB_TYPE_STORAGE') != 'db', 'Wrong DB')
     def pep8_test(self):
         """Check pep8 Style"""
         check = pep8.StyleGuide(quiet=True)
         storage_py = style.check_files(['models/engine/db_storage.py'])
         self.assertEqual(p.total_errors, 0, "fix pep8")
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db', 'Wrong DB')
+    @unittest.skipIf(getenv('HBNB_TYPE_STORAGE') != 'db', 'Wrong DB')
     def attr_place_DBStorage(self):
         self.assertTrue(hasattr(DBStorage, 'name'))
 
