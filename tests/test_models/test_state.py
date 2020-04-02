@@ -2,6 +2,7 @@
 """test for state"""
 import os
 import pep8
+import models
 import MySQLdb
 import unittest
 from models.base_model import Base
