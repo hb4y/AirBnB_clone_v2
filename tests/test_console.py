@@ -17,7 +17,6 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 from models.engine.file_storage import FileStorage
-from models.engine.db_storage import DBStorage
 
 
 class TestConsole(unittest.TestCase):
@@ -32,8 +31,6 @@ class TestConsole(unittest.TestCase):
     def teardown(cls):
         """at the end of the test this will tear it down"""
         del cls.consol
-        if type(models.storage) == DBStorage:
-                    models.storage._DBStorage__session.close()
 
     def tearDown(self):
         """Remove temporary file (file.json) created as a result"""
@@ -75,80 +72,22 @@ class TestConsole(unittest.TestCase):
             self.consol.onecmd("quit")
             self.assertEqual('', f.getvalue())
 
-    def test_create_errors(self):
-        """Test create command errors."""
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.HBNB.onecmd("create")
+    def test_create(self):
+        """Test create command inpout"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("create")
             self.assertEqual(
                 "** class name missing **\n", f.getvalue())
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.HBNB.onecmd("create asdfsfsd")
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("create asdfsfsd")
             self.assertEqual(
                 "** class doesn't exist **\n", f.getvalue())
-
-    @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
-    def test_create(self):
-        """Test create command."""
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.cnsol.onecmd("create BaseModel")
-            bm = f.getvalue().strip()
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.cnsol.onecmd("create User")
-            us = f.getvalue().strip()
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.cnsol.onecmd("create State")
-            st = f.getvalue().strip()
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.cnsol.onecmd("create Place")
-            pl = f.getvalue().strip()
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.cnsol.onecmd("create City")
-            ct = f.getvalue().strip()
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.cnsol.onecmd("create Review")
-            rv = f.getvalue().strip()
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.cnsol.onecmd("create Amenity")
-            am = f.getvalue().strip()
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.cnsol.onecmd("all BaseModel")
-            self.assertIn(bm, f.getvalue())
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.cnsol.onecmd("all User")
-            self.assertIn(us, f.getvalue())
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.cnsol.onecmd("all State")
-            self.assertIn(st, f.getvalue())
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.cnsol.onecmd("all Place")
-            self.assertIn(pl, f.getvalue())
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.cnsol.onecmd("all City")
-            self.assertIn(ct, f.getvalue())
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.cnsol.onecmd("all Review")
-            self.assertIn(rv, f.getvalue())
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.cnsol.onecmd("all Amenity")
-            self.assertIn(am, f.getvalue())
-
-    @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
-    def test_create_kwargs(self):
-        """Test create command with kwargs."""
-        with patch("sys.stdout", new=StringIO()) as f:
-            call = ('create Place city_id="0001" name="My_house" '
-                    'number_rooms=4 latitude=37.77 longitude=a')
-            self.cnsol.onecmd(call)
-            pl = f.getvalue().strip()
-        with patch("sys.stdout", new=StringIO()) as f:
-            self.cnsol.onecmd("all Place")
-            output = f.getvalue()
-            self.assertIn(pl, output)
-            self.assertIn("'city_id': '0001'", output)
-            self.assertIn("'name': 'My house'", output)
-            self.assertIn("'number_rooms': 4", output)
-            self.assertIn("'latitude': 37.77", output)
-            self.assertNotIn("'longitude'", output)
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("create User")
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.consol.onecmd("all User")
+            self.assertEqual(
+                "[[User]", f.getvalue()[:7])
 
     def test_show(self):
         """Test show command inpout"""
@@ -188,7 +127,6 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(
                 "** no instance found **\n", f.getvalue())
 
-    @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
     def test_all(self):
         """Test all command inpout"""
         with patch('sys.stdout', new=StringIO()) as f:
@@ -198,7 +136,6 @@ class TestConsole(unittest.TestCase):
             self.consol.onecmd("all State")
             self.assertEqual("[]\n", f.getvalue())
 
-    @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
     def test_update(self):
         """Test update command inpout"""
         with patch('sys.stdout', new=StringIO()) as f:
@@ -230,7 +167,6 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(
                 "** value missing **\n", f.getvalue())
 
-    @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
     def test_z_all(self):
         """Test alternate all command inpout"""
         with patch('sys.stdout', new=StringIO()) as f:
@@ -241,7 +177,6 @@ class TestConsole(unittest.TestCase):
             self.consol.onecmd("State.all()")
             self.assertEqual("[]\n", f.getvalue())
 
-    @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
     def test_z_count(self):
         """Test count command inpout"""
         with patch('sys.stdout', new=StringIO()) as f:
@@ -274,7 +209,6 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(
                 "** no instance found **\n", f.getvalue())
 
-    @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
     def test_update(self):
         """Test alternate destroy command inpout"""
         with patch('sys.stdout', new=StringIO()) as f:

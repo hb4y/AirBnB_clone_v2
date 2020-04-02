@@ -16,15 +16,17 @@ class State(BaseModel, Base):
     """
     __tablename__ = "states"
     name = Column(String(128), nullable=False)
-    cities = relationship("City",  backref="state", cascade="delete")
 
-    if getenv("HBNB_TYPE_STORAGE") == "file":
+    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        cities = relationship("City",  backref="state", cascade="all, delete")
+    else:
         @property
         def cities(self):
             """Get the cities form the state.
             """
-            cl = []
-            for city in list(models.storage.all(City).values()):
+            all_cities = models.engine.all(City)
+            st_cities = []
+            for k, city in all_cities.items():
                 if city.state_id == self.id:
-                    cl.append(city)
-            return cl
+                    st_cities.append(city)
+            return st_cities

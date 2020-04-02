@@ -68,26 +68,15 @@ class DBStorage:
         self.__session.commit()
 
     def reload(self):
-        """serialize the file path to JSON file path
+        """ reload all the objs
         """
-        try:
-            with open(self.__file_path, 'r', encoding="UTF-8") as f:
-                for key, value in (json.load(f)).items():
-                    value = eval(value["__class__"])(**value)
-                    self.__objects[key] = value
-        except FileNotFoundError:
-            pass
+        Base.metadata.create_all(self.__engine)
+        Session = scoped_session(sessionmaker(bind=self.__engine,
+                                              expire_on_commit=False))
+        self.__session = Session()
 
     def delete(self, obj=None):
         """delete obj from db session
         """
         if obj is not None:
             self.__session.delete(obj)
-
-    def reload(self):
-        """Creates the tables in db and a new session."""
-        Base.metadata.create_all(self.__engine)
-        sm = sessionmaker(bind=self.__engine,
-                          expire_on_commit=False)
-        Session = scoped_session(sm)
-        self.__session = Session()
