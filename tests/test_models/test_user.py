@@ -21,37 +21,23 @@ class TestUser(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """set up for test"""
-        try:
-            os.rename("file.json", "tmp")
-        except IOError:
-            pass
-        FileStorage._FileStorage__objects = {}
-        cls.filestorage = FileStorage()
-        cls.user = User(email="poppy@holberton.com", password="betty98")
-
-        if type(models.storage) == DBStorage:
-            cls.dbstorage = DBStorage()
-            Base.metadata.create_all(cls.dbstorage._DBStorage__engine)
-            Session = sessionmaker(bind=cls.dbstorage._DBStorage__engine)
-            cls.dbstorage._DBStorage__session = Session()
+        cls.user = User()
+        cls.user.first_name = "Kevin"
+        cls.user.last_name = "Yook"
+        cls.user.email = "yook00627@gmamil.com"
+        cls.user.password = "secret"
 
     @classmethod
-    def tearDownClass(cls):
-        """testing teardown.
-        """
+    def teardown(cls):
+        """at the end of the test this will tear it down"""
+        del cls.user
+
+    def tearDown(self):
+        """teardown"""
         try:
             os.remove("file.json")
-        except IOError:
+        except Exception:
             pass
-        try:
-            os.rename("tmp", "file.json")
-        except IOError:
-            pass
-        del cls.user
-        del cls.filestorage
-        if type(models.storage) == DBStorage:
-            cls.dbstorage._DBStorage__session.close()
-            del cls.dbstorage
 
     def test_pep8_User(self):
         """Tests pep8 style"""
@@ -65,33 +51,26 @@ class TestUser(unittest.TestCase):
 
     def test_attributes_User(self):
         """chekcing if User have attributes"""
-        us = User(email="a", password="a")
-        self.assertEqual(sqlalchemy.sql.schema.Column, type(us.id))
-        self.assertEqual(datetime, type(us.created_at))
-        self.assertEqual(datetime, type(us.updated_at))
-        self.assertTrue(hasattr(us, "__tablename__"))
-        self.assertTrue(hasattr(us, "email"))
-        self.assertTrue(hasattr(us, "password"))
-        self.assertTrue(hasattr(us, "first_name"))
-        self.assertTrue(hasattr(us, "last_name"))
+        self.assertTrue('email' in self.user.__dict__)
+        self.assertTrue('id' in self.user.__dict__)
+        self.assertTrue('created_at' in self.user.__dict__)
+        self.assertTrue('updated_at' in self.user.__dict__)
+        self.assertTrue('password' in self.user.__dict__)
+        self.assertTrue('first_name' in self.user.__dict__)
+        self.assertTrue('last_name' in self.user.__dict__)
 
-    def test_is_subclass(self):
-        """Check that User is a subclass of BaseModel."""
-        self.assertTrue(issubclass(User, BaseModel))
+    def test_is_subclass_User(self):
+        """test if User is subclass of Basemodel"""
+        self.assertTrue(issubclass(self.user.__class__, BaseModel), True)
 
-    def test_init(self):
-        """Test initialization."""
-        self.assertIsInstance(self.user, User)
+    def test_attribute_types_User(self):
+        """test attribute type for User"""
+        self.assertEqual(type(self.user.email), str)
+        self.assertEqual(type(self.user.password), str)
+        self.assertEqual(type(self.user.first_name), str)
+        self.assertEqual(type(self.user.first_name), str)
 
-    def test_init_args_kwargs(self):
-        """Test initialization with args and kwargs."""
-        dt = datetime.utcnow()
-        st = User("1", id="5", created_at=dt.isoformat())
-        self.assertEqual(st.id, "5")
-        self.assertEqual(st.created_at, dt)
-
-    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db",
-                     "can't run")
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "can't run")
     def test_save_User(self):
         """test if the save works"""
         self.user.save()
