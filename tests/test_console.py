@@ -112,8 +112,7 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(
                 "** no instance found **\n", f.getvalue())
 
-    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db",
-                     "can't run")
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "can't run")
     def test_destroy(self):
         """Test destroy command inpout"""
         with patch('sys.stdout', new=StringIO()) as f:
@@ -133,8 +132,7 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(
                 "** no instance found **\n", f.getvalue())
 
-    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db",
-                     "can't run")
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "can't run")
     def test_all(self):
         """Test all command inpout"""
         with patch('sys.stdout', new=StringIO()) as f:
@@ -144,8 +142,7 @@ class TestConsole(unittest.TestCase):
             self.consol.onecmd("all State")
             self.assertEqual("[]\n", f.getvalue())
 
-    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db",
-                     "can't run")
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "can't run")
     def test_destroy(self):
         """Test destroy command inpout"""
         with patch('sys.stdout', new=StringIO()) as f:
@@ -165,8 +162,7 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(
                 "** no instance found **\n", f.getvalue())
 
-    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db",
-                     "can't run")
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "can't run")
     def test_update(self):
         """Test update command inpout"""
         with patch('sys.stdout', new=StringIO()) as f:
@@ -200,4 +196,5 @@ class TestConsole(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    if os.getenv("HBNB_TYPE_STORAGE") != "db":
+        unittest.main()
