@@ -2,17 +2,9 @@
 """test for user"""
 import os
 import pep8
-import models
-import MySQLdb
 import unittest
-import sqlalchemy
-from datetime import datetime
-from models.base_model import Base, BaseModel
+from models.base_model import BaseModel
 from models.user import User
-from models.engine.db_storage import DBStorage
-from models.engine.file_storage import FileStorage
-from sqlalchemy.exc import OperationalError
-from sqlalchemy.orm import sessionmaker
 
 
 class TestUser(unittest.TestCase):
