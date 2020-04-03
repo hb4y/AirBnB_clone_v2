@@ -4,6 +4,19 @@ This is the console /command interpreter for the Holberton Airbnb clone project.
 The console can be used to store objects in and retrieve objects either from a JSON
 or from MySQL database.
 
+## Topics
+Several concepts from **Software engineering** are applied:
+- What is Unit testing and how to implement it in a large project (TDD)
+- What is `*args` and how to use it
+- What is `**kwargs` and how to use it
+- How to handle named arguments in a function
+- How to create a MySQL database
+- How to create a MySQL user and grant it privileges
+- What ORM means
+- How to map a Python Class to a MySQL table
+- How to handle 2 different storage engines with the same codebase
+- How to use environment variables
+
 ### Requirements:
 * Ubuntu 14.04 LTS
 * python3 (version 3.4.3)
