@@ -17,6 +17,9 @@ Several concepts from **Software engineering** are applied:
 - How to handle 2 different storage engines with the same codebase
 - How to use environment variables
 
+## The project
+Next what do you need tu use it and learn about it:
+
 ### Requirements:
 * Ubuntu 14.04 LTS
 * python3 (version 3.4.3)
