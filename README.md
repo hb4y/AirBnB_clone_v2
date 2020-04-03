@@ -1,8 +1,8 @@
 # HBNB
 
 This is the console /command interpreter for the Holberton Airbnb clone project.
-The console can be used to store objects in and retrieve objects from a JSON.
-Also the console can save information in a MySQL database.
+The console can be used to store objects in and retrieve objects either from a JSON
+or from MySQL database.
 
 ### Requirements:
 * Ubuntu 14.04 LTS
@@ -63,3 +63,9 @@ Ex:
 Additionally, the console supports `<class name>.<command>(<parameters>)` syntax.
 Ex:
 `City.show(my_city_id)`
+
+## Authors
+* Miranda Evans - miranda.r.evans@gmail.com
+* Kevin Yook - kevin.yook@holbertonschool.com
+* Hugo Bayona - hugo.bayona@holbertonschool.com
+* Gonzalo Gomez Millan - 1240@holbertonschool.com
