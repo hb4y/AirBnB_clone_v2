@@ -121,7 +121,7 @@ guillaume@ubuntu:~/AirBnB_v2$ cat test_params_create | ./console.py
 guillaume@ubuntu:~/AirBnB_v2$
 ```
 
-#### 2. Console improvements
+#### 3. MySQL setup development
 Script that prepares a MySQL server for the project:
 
 ```bash wrap
