@@ -26,8 +26,7 @@ $cont = "<html>
     <body>
         Holberton School
     </body>
-</html>
-"
+</html>\n"
 
 package { 'nginx':
   ensure   => 'present',
@@ -102,7 +101,6 @@ file { '/etc/nginx/sites-available/default':
   content => $nginx_conf,
 }
 
-service { 'nginx':
-  ensure  => running,
-  require => Package['nginx'],
+exec { 'nginx restart':
+  path => '/etc/init.d/'
 }
