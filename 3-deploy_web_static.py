@@ -3,13 +3,15 @@
 Fabric script that contents the "deploy" function and controls the whole
 process.
 """
-do_pack = __import__('1-pack_web_static').do_pack
-do_deploy = __import__('2-do_deploy_web_static').do_deploy
 from fabric.api import *
 from fabric.operations import run, put, sudo
 import os
 env.hosts = ['1240-web-01', '1240-web-02']
 ctrl_path = None
+
+do_pack = __import__('1-pack_web_static').do_pack
+do_deploy = __import__('2-do_deploy_web_static').do_deploy
+
 
 def deploy():
     """
