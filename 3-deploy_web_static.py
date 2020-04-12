@@ -4,6 +4,7 @@ Fabric script that contents the "deploy" function and controls the whole
 process.
 """
 from fabric.api import *
+from datetime import datetime
 from fabric.operations import run, put, sudo
 import os
 
@@ -11,9 +12,54 @@ env.user = 'ubuntu'
 env.hosts = ['1240-web-01', '1240-web-02']
 ctrl_path = None
 
-do_pack = __import__('1-pack_web_static').do_pack
-do_deploy = __import__('2-do_deploy_web_static').do_deploy
 
+def do_pack():
+    """
+    Function that generates a .tgz archive from the contents of the web_static
+    folder of the AirBnB Clone repo
+    """
+    time = datetime.utcnow().strftime('%Y%m%d%H%M%S')
+    file_name = "versions/web_static_{}.tgz".format(time)
+    try:
+        local("mkdir -p ./versions")
+        local("tar -zcvf {} ./web_static".format(file_name))
+        return file_name
+    except:
+        return None
+
+def do_deploy(archive_path):
+    """
+    Function that distributes an archive to the web servers.
+
+    Args:
+        archive_path (str): The file for distribution.
+
+    Returns:
+        False if something goes wrong
+        True if everything is ok
+    """
+    if os.path.isfile(archive_path) is False:
+        return False
+    try:
+        archive = archive_path.split("/")[-1]
+        path = "/data/web_static/releases"
+        put("{}".format(archive_path), "/tmp/{}".format(archive))
+        folder = archive.split(".")
+        run("mkdir -p {}/{}/".format(path, folder[0]))
+        new_archive = '.'.join(folder)
+        run("tar -xzf /tmp/{} -C {}/{}/"
+            .format(new_archive, path, folder[0]))
+        run("rm /tmp/{}".format(archive))
+        run("mv {}/{}/web_static/* {}/{}/"
+            .format(path, folder[0], path, folder[0]))
+        run("rm -rf {}/{}/web_static".format(path, folder[0]))
+        run("rm -rf /data/web_static/current")
+        run("ln -sf {}/{} /data/web_static/current"
+            .format(path, folder[0]))
+        print("New version deployed!")
+        return True
+    except:
+        return False
 
 def deploy():
     """
