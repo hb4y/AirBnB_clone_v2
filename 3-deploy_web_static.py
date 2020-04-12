@@ -6,6 +6,8 @@ process.
 from fabric.api import *
 from fabric.operations import run, put, sudo
 import os
+
+env.user = 'ubuntu'
 env.hosts = ['1240-web-01', '1240-web-02']
 ctrl_path = None
 
