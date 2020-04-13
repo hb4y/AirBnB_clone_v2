@@ -96,9 +96,11 @@ file { '/var/www/html/404.html':
   content => "Ceci n'est pas une page\n",
 }
 
-file { '/etc/nginx/sites-available/default':
-  ensure  => 'present',
-  content => $cfg,
+exec { 'sed':
+  command => '/usr/bin/env sed -i "/listen 80 default_server/a location \
+/hbnb_static/ { alias /data/web_static/current/;}" \
+/etc/nginx/sites-available/default',
+  require => Package['nginx'],
 }
 
 exec { 'nginx restart':
