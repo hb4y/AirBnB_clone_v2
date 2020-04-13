@@ -94,7 +94,7 @@ file { '/var/www/html/index.html':
 file { '/var/www/html/404.html':
   ensure  => 'present',
   content => "Ceci n'est pas une page\n",
-} ->
+}
 
 file { '/etc/nginx/sites-available/default':
   ensure  => 'present',
