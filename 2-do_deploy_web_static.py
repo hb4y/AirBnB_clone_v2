@@ -6,7 +6,7 @@ servers.
 from fabric.api import *
 from fabric.operations import run, put, sudo
 import os
-env.hosts = ['1240-web-01', '1240-web-02']
+env.hosts = ['1146-web-01', '1146-web-02']
 
 
 def do_deploy(archive_path):
